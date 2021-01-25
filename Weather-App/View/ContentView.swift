@@ -28,9 +28,12 @@ struct ContentView : View
             
         
         HStack{
-            Button(action: {}, label: {
+            Button(action: {
+                weatherService.fetchCity()
+                weatherService.fetchWeather(lat: userLatitude, lon: userLongitude)
+            }, label: {
                // Text("Button")
-                Image("reload_weather")
+                Image("reload")
             })
             Spacer()
             Text("Weather Forecast")
@@ -43,16 +46,16 @@ struct ContentView : View
             }
         }.padding()
         
-            CurrentView(current: weatherService.json.current, city: weatherService.city, currentData: weatherService.currentTemperatureData)
+            CurrentView( city: weatherService.city, currentData: weatherService.currentTemperatureData)
                 .padding()
-            HourlyForecastView(hourlyForecast: weatherService.json.hourly)
+            HourlyForecastView(hourlyForecast: weatherService.currentTemperatureData.hourly)
                 .padding()
         
         Image("jamia_one")
             .resizable()
             .frame(maxWidth : 430, maxHeight: 200, alignment: .top)
             .edgesIgnoringSafeArea(.all)
-            .aspectRatio(contentMode: .fit)
+            .aspectRatio(contentMode: .fill)
             .padding()
     
             

@@ -15,6 +15,7 @@ final class WeatherService  : ObservableObject
     var objectWillChange: PassthroughSubject<String,Never> = .init()
     @Published var city = "Loading"
     @Published var currentTemperatureData = CurrentWeatherModel(temperature: 40, city: "New York", currentDate: "Mon 25, Jan", iconName: "cloud", hourly: [])
+    var weeklyData = WeeklyAPI(list: [])
     
     
     
@@ -42,14 +43,59 @@ final class WeatherService  : ObservableObject
         let data = try! Data(contentsOf: url!)
         return try! decoder.decode([String : WeatherSymbol].self, from: data)
     }
+    
+    
+    
+    
     let weatherURL = "https://api.openweathermap.org/data/2.5/onecall?"
-    let apiKey = ""
+    let apiKey = "8bd0eccc296b6a82285602877181b0a9"
     
-//    func fetchCurrentWeather(cityName : String){
-//        let urlString = "\(weatherURL)&appid=\(apiKey)"//"&q=\(cityName)"
-//        performRequest(with: urlString)
-//    }
+    func fetchWeeklyWeather(lat : String , lon : String)
+    {
+        let  weeklyURL = "https://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139"
+        let urlString = "\(weeklyURL)&appid=\(apiKey)&units=imperial"
+        print(urlString)
+        performWeeklyRequest(with: urlString)
+    }
     
+    func performWeeklyRequest(with urlString: String)
+    {
+        if let url = URL(string: urlString) {
+            let session = URLSession(configuration: .default)
+            let task = session.dataTask(with: url) { (data, response, error) in
+                guard let safeData = data , error == nil  else
+                {
+                    print("Error retreiving data from open weather map")
+                    print(response)
+                    return
+                }
+                let decoder = JSONDecoder()
+                do
+                {
+                    let decodedData = try decoder.decode(WeeklyAPI.self, from: safeData)
+                    self.weeklyData = decodedData
+                   // return decodedData
+                    print(decodedData)
+
+
+
+                }
+                catch
+                {
+                    print("Error decoding data")
+
+                    let j = try! JSONSerialization.jsonObject(with: safeData, options: [])
+                    print("this is j",j)
+                    return
+                }
+            }
+            task.resume()
+        }
+        
+        
+    }
+        
+
     func fetchWeather(lat : String , lon : String)
     {
         let urlString = "\(weatherURL)lat=\(lat)&lon=\(lon)&appid=\(apiKey)&units=imperial"
@@ -70,10 +116,10 @@ final class WeatherService  : ObservableObject
                 do
                 {
                     let decodedData = try decoder.decode(API.self, from: safeData)
-                    print(decodedData)
+                 //   print(decodedData)
                     self.currentTemperatureData.temperature = Int(decodedData.current.formattedTemp) ?? 30
                     self.currentTemperatureData.currentDate = decodedData.current.formattedDate
-                    
+                    self.currentTemperatureData.hourly = decodedData.hourly
                     
                   
                 }

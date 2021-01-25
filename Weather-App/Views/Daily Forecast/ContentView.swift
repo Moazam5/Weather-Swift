@@ -11,7 +11,7 @@ import CoreLocation
 struct ContentView : View
 {
     
-    @ObservedObject var weatherService = WeatherService.shared
+    @ObservedObject   var weatherService = WeatherService.shared
     @ObservedObject var locationManager = LocationManager()
     
     var userLatitude: String {
@@ -22,6 +22,7 @@ struct ContentView : View
         return "\(locationManager.lastLocation?.coordinate.longitude ?? -74.616)"
        }
    
+    
     var body: some View {
         VStack(spacing : 15)
         {
@@ -29,9 +30,8 @@ struct ContentView : View
         
         HStack{
             Button(action: {
-                weatherService.fetchWeather(lat: userLatitude, lon: userLongitude)
+                weatherService.fetchWeatherData(lat: userLatitude, lon: userLongitude, weekly: false)
             }, label: {
-               // Text("Button")
                 Image("reload")
             })
             Spacer()
@@ -65,7 +65,8 @@ struct ContentView : View
       //  .resizable()
         .onAppear(perform: {
             print("Fetching data")
-            weatherService.fetchWeather(lat: userLatitude, lon: userLongitude)
+            weatherService.fetchWeatherData(lat: userLatitude, lon: userLongitude, weekly: true)
+            weatherService.fetchWeatherData(lat: userLatitude, lon: userLongitude, weekly : false)
             print("Currnet temp", weatherService.currentTemperatureData.temperature)
 
         })

@@ -21,6 +21,7 @@ struct AppView: View {
                     Text("Weekly")
                 }
         }
+        .background(Color.red)
     }
 }
 

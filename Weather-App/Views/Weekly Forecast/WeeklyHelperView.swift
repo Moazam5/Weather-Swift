@@ -13,9 +13,6 @@ struct WeeklyHelperView: View {
     let index : Int  
     
     var body: some View {
-        
-        
-        
         VStack (spacing : 0){
             let offset = 8
             let startIndex = offset * index

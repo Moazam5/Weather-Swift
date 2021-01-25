@@ -37,18 +37,12 @@ struct CurrentView: View {
                 .fontWeight(.medium)
             Spacer()
             
-
-                
-        }
+  }
         .frame(maxWidth : .infinity , maxHeight: 200)
         .background(Color.white)
         .cornerRadius(8)
         .shadow(color: .init(.sRGB, white: 0, opacity: 0.20), radius: 4, x: 0, y: 4)
             
-            
-    
-            
-     
     
     }
     

@@ -15,8 +15,6 @@ struct WeeklyMainView: View {
     var body: some View {
         VStack
         {
-            
-        
         Text("Looking Ahead")
             .foregroundColor(.orange)
             .font(.custom("Glober", fixedSize: 20))
@@ -30,7 +28,7 @@ struct WeeklyMainView: View {
                     .fontWeight(.bold)
                     .padding()
                 
-                WeeklyHelperView(tempData:weatherService.weeklyData)
+                WeeklyHelperView(tempData:weatherService.weeklyData, index : index)
                Spacer()
             }
         }

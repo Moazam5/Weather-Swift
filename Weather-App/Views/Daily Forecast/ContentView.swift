@@ -61,8 +61,6 @@ struct ContentView : View
         
       
         }
-      //  .padding()
-      //  .resizable()
         .onAppear(perform: {
             print("Fetching data")
             weatherService.fetchWeatherData(lat: userLatitude, lon: userLongitude, weekly: true)

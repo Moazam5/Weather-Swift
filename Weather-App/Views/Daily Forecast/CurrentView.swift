@@ -17,7 +17,7 @@ struct CurrentView: View {
         
         VStack{
             HStack{
-                Image(systemName: currentData.iconName)
+                Image(systemName: currentData.conditionName)
                 VStack(alignment: .leading) {
                     Text("Today")
                         .font(.system(size: 18))

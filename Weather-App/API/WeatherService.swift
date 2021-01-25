@@ -14,25 +14,19 @@ final class WeatherService  : ObservableObject
     
     var objectWillChange: PassthroughSubject<String,Never> = .init()
     @Published var city = "Loading"
-    @Published var currentTemperatureData = CurrentWeatherModel(temperature: "40", city: "New York", currentDate: "Mon 25, Jan", iconName: "cloud", hourly: [])
+    @Published var currentTemperatureData = CurrentWeatherModel(temperature: "40", city: "New York", currentDate: "Mon 25, Jan", iconName: "cloud", hourly: [], id: 200)
     var weeklyData : [Day] = []
     let apiKey = "8bd0eccc296b6a82285602877181b0a9"
+   @Published var num = 0
     
     
     init() {
-
         fetchWeatherData(lat: "40.7128", lon: "-74.006", weekly: true)
         fetchWeatherData(lat: "40.7128", lon: "-74.006", weekly: false)
-
     }
     
 
-   
-    
-    
-    
-    
-  
+   //Mark:- Fetching data from API
     func fetchWeatherData(lat : String , lon : String, weekly : Bool)
     {
         let  weeklyURL = "https://api.openweathermap.org/data/2.5/forecast?"
@@ -40,6 +34,7 @@ final class WeatherService  : ObservableObject
         let requestURL = weekly ? weeklyURL : currentURL
         let urlString = "\(requestURL)lat=\(lat)&lon=\(lon)&appid=\(apiKey)&units=imperial"
         print(urlString)
+        num += 1
         performWeeklyRequest(with: urlString, weekly: weekly)
     }
     
@@ -74,6 +69,7 @@ final class WeatherService  : ObservableObject
             self.currentTemperatureData.temperature = (decodedData.current.formattedTemp)
             self.currentTemperatureData.currentDate = decodedData.current.formattedDate
             self.currentTemperatureData.hourly = decodedData.hourly
+            self.currentTemperatureData.id = decodedData.current.weather[0].id
         }
         catch
         {

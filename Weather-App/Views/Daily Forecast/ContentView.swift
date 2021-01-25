@@ -29,7 +29,6 @@ struct ContentView : View
         
         HStack{
             Button(action: {
-                weatherService.fetchCity()
                 weatherService.fetchWeather(lat: userLatitude, lon: userLongitude)
             }, label: {
                // Text("Button")
@@ -51,7 +50,7 @@ struct ContentView : View
             HourlyForecastView(hourlyForecast: weatherService.currentTemperatureData.hourly)
                 .padding()
         
-        Image("jamia_one")
+        Image("nyc")
             .resizable()
             .frame(maxWidth : 430, maxHeight: 200, alignment: .top)
             .edgesIgnoringSafeArea(.all)
@@ -65,8 +64,10 @@ struct ContentView : View
       //  .padding()
       //  .resizable()
         .onAppear(perform: {
-            weatherService.fetchCity()
+            print("Fetching data")
             weatherService.fetchWeather(lat: userLatitude, lon: userLongitude)
+            print("Currnet temp", weatherService.currentTemperatureData.temperature)
+
         })
         
         

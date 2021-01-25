@@ -22,9 +22,9 @@ class Weather_AppTests: XCTestCase {
         
         let weatherService = WeatherService.shared
         let icons = weatherService.icons
-        let json = weatherService.json
+      //  let json = weatherService.json
         XCTAssertNotNil(icons)
-        XCTAssertNoThrow(json)
+    //    XCTAssertNoThrow(json)
     }
 
     func testPerformanceExample() throws {

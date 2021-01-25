@@ -25,15 +25,15 @@ final class WeatherService  : ObservableObject
     
     
     
-    var json : API {
-        let decoder = JSONDecoder()
-        let url = Bundle.main.url(forResource: "weatherResponse", withExtension: "json")!
-        let data = try! Data(contentsOf: url)
-        return  try! decoder.decode(API.self, from: data)
-        
-        
-        
-    }
+//    var json : API {
+//        let decoder = JSONDecoder()
+//        let url = Bundle.main.url(forResource: "weatherResponse", withExtension: "json")!
+//        let data = try! Data(contentsOf: url)
+//        return  try! decoder.decode(API.self, from: data)
+//
+//
+//
+//    }
     
     struct WeatherSymbol : Codable {
         let icon : String
@@ -76,7 +76,7 @@ final class WeatherService  : ObservableObject
                 let decoder = JSONDecoder()
                 do
                 {
-                    let decodedData = try decoder.decode(WeeklyAPI.self, from: safeData)
+                    let decodedData = try decoder.decode(WeeklyDataModel.self, from: safeData)
                     self.weeklyData = decodedData.list
                    // return decodedData
                     print(decodedData)
@@ -138,18 +138,18 @@ final class WeatherService  : ObservableObject
         }
     }
         
-    func fetchCity()
-    {
-        CLGeocoder().reverseGeocodeLocation(.init(latitude: json.lat, longitude: json.lon)) { (placemarks, error) in
-            
-            let city = placemarks?.first.flatMap {
-                "\($0.locality ?? ""), \($0.administrativeArea ?? "")"
-              
-            } ?? "Error City"
-            self.city = city
-            self.objectWillChange.send(city)
-        }
-    }
+//    func fetchCity()
+//    {
+//        CLGeocoder().reverseGeocodeLocation(.init(latitude: json.lat, longitude: json.lon)) { (placemarks, error) in
+//            
+//            let city = placemarks?.first.flatMap {
+//                "\($0.locality ?? ""), \($0.administrativeArea ?? "")"
+//              
+//            } ?? "Error City"
+//            self.city = city
+//            self.objectWillChange.send(city)
+//        }
+//    }
     
 
 }

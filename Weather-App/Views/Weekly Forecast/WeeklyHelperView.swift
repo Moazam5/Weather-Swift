@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct WeeklyTemperatureView: View {
+struct WeeklyHelperView: View {
     
     let tempData : [Day]
     
@@ -26,7 +26,7 @@ struct WeeklyTemperatureView: View {
                     let forecast = tempData[element]
                     HStack{
                     Image(systemName: "cloud")
-                        Text("\(forecast.formattedDate) •")
+                        Text("\(forecast.formattedTime) •")
                         .font(.system(size: 16))
                         .fontWeight(.medium)
                     

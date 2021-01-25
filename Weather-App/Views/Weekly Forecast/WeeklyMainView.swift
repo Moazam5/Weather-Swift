@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct WeeklyView: View {
+struct WeeklyMainView: View {
     let tempData : [Day]
     
     @ObservedObject var weatherService = WeatherService.shared
@@ -18,6 +18,9 @@ struct WeeklyView: View {
             
         
         Text("Looking Ahead")
+            .foregroundColor(.orange)
+            .font(.custom("Glober", fixedSize: 20))
+            .padding()
         ScrollView{
             
         
@@ -27,7 +30,7 @@ struct WeeklyView: View {
                     .fontWeight(.bold)
                     .padding()
                 
-                WeeklyTemperatureView(tempData:weatherService.weeklyData)
+                WeeklyHelperView(tempData:weatherService.weeklyData)
                Spacer()
             }
         }

@@ -31,7 +31,7 @@ struct CurrentView: View {
             Text("\(currentData.temperature)")
                 .font(.system(size: 75))
                 .fontWeight(.thin)
-                .foregroundColor(.yellow)
+                .foregroundColor(.orange)
             Text(currentData.city)
                 .font(.system(size: 16))
                 .fontWeight(.medium)

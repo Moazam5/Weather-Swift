@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct WeeklyAPI  : Codable{
+struct WeeklyDataModel  : Codable{
     var list : [Day]
     
   
@@ -19,11 +19,19 @@ struct Day : Codable {
     let main : Main
     let weather : [WeeklyWeather]
     
-    var formattedDate : String {
+    var formattedTime : String {
        let date = Date(timeIntervalSince1970: TimeInterval(dt))
 
         let df = DateFormatter()
         df.dateFormat = "h:00 a"
+        return df.string(from: date)
+    }
+    
+    var formattedDate : String {
+       let date = Date(timeIntervalSince1970: TimeInterval(dt))
+
+        let df = DateFormatter()
+        df.dateFormat = "EEEE, MMM d"
         return df.string(from: date)
     }
     

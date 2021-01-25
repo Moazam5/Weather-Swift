@@ -36,8 +36,9 @@ struct HourlyForecastView: View {
         
     }}
 
-struct HourlyForecastView_Previews: PreviewProvider {
-    static var previews: some View {
-        HourlyForecastView(hourlyForecast: WeatherService.shared.json.hourly)
-    }
-}
+//struct HourlyForecastView_Previews: PreviewProvider {
+//    var weatherService = Wea
+//    static var previews: some View {
+//        HourlyForecastView(hourlyForecast: )
+//    }
+//}

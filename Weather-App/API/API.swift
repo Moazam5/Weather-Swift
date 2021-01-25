@@ -82,7 +82,8 @@ struct Current: Codable {
     let windSpeed: Double
     let windDeg: Int
     let weather: [Weather]
-    let pop: Int?
+    let pop: Double?
+    let snow: Snow?
 
     enum CodingKeys: String, CodingKey {
         case dt, sunrise, sunset, temp
@@ -92,7 +93,7 @@ struct Current: Codable {
         case uvi, clouds, visibility
         case windSpeed = "wind_speed"
         case windDeg = "wind_deg"
-        case weather, pop
+        case weather, pop, snow
     }
 }
 
@@ -129,7 +130,8 @@ extension Current {
         windSpeed: Double? = nil,
         windDeg: Int? = nil,
         weather: [Weather]? = nil,
-        pop: Int?? = nil
+        pop: Double?? = nil,
+        snow: Snow?? = nil
     ) -> Current {
         return Current(
             dt: dt ?? self.dt,
@@ -146,7 +148,52 @@ extension Current {
             windSpeed: windSpeed ?? self.windSpeed,
             windDeg: windDeg ?? self.windDeg,
             weather: weather ?? self.weather,
-            pop: pop ?? self.pop
+            pop: pop ?? self.pop,
+            snow: snow ?? self.snow
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
+// MARK: - Snow
+struct Snow: Codable {
+    let the1H: Double
+
+    enum CodingKeys: String, CodingKey {
+        case the1H = "1h"
+    }
+}
+
+// MARK: Snow convenience initializers and mutators
+
+extension Snow {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(Snow.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        the1H: Double? = nil
+    ) -> Snow {
+        return Snow(
+            the1H: the1H ?? self.the1H
         )
     }
 

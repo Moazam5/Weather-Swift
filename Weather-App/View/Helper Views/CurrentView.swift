@@ -8,39 +8,57 @@
 import SwiftUI
 
 struct CurrentView: View {
+    
+    let current : Current
+    let city : String
+    let currentData : CurrentWeatherModel
+    
     var body: some View {
+      
+        
         VStack{
             HStack{
-                Image(systemName: "cloud")
+                Image(systemName: currentData.iconName)
                 VStack(alignment: .leading) {
                     Text("Today")
                         .font(.system(size: 18))
                         .fontWeight(.medium)
-                    Text("Sat, Jan 24")
+                    Text(currentData.currentDate)
                         .font(.system(size: 14))
                         .fontWeight(.medium)
                         .foregroundColor(.gray)
                 }
             }
-            Text("48º")
+            Text("\(currentData.temperature)")
                 .font(.system(size: 75))
                 .fontWeight(.thin)
                 .foregroundColor(.yellow)
-            Text("New York, NY")
+            Text(city)
                 .font(.system(size: 16))
                 .fontWeight(.medium)
+            Spacer()
+            
+
+                
         }
         .frame(maxWidth : .infinity , maxHeight: 200)
         .background(Color.white)
         .cornerRadius(8)
         .shadow(color: .init(.sRGB, white: 0, opacity: 0.20), radius: 4, x: 0, y: 4)
-       
-        
+            
+            
+    
+            
+     
+    
+    }
+    
+}
+
+
+struct CurrentView_Previews: PreviewProvider {
+    static var previews: some View {
+        CurrentView(current: WeatherService.shared.json.current, city: "New York, NY", currentData: WeatherService.shared.currentTemperatureData)
     }
 }
-//
-//struct CurrentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CurrentView()
-//    }
-//}
+

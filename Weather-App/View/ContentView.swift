@@ -10,37 +10,64 @@ import CoreLocation
 
 struct ContentView : View
 {
-    var weatherManager = WeatherManager()
-    var coreLocation = CLLocationManager()
+    
+    @ObservedObject var weatherService = WeatherService.shared
+    @ObservedObject var locationManager = LocationManager()
+    
+    var userLatitude: String {
+        return "\(locationManager.lastLocation?.coordinate.latitude ?? 39.327)"
+       }
+
+    var userLongitude: String {
+        return "\(locationManager.lastLocation?.coordinate.longitude ?? -74.616)"
+       }
    
     var body: some View {
+        VStack(spacing : 15)
+        {
+            
         
         HStack{
+            Button(action: {}, label: {
+               // Text("Button")
+                Image("reload_weather")
+            })
             Spacer()
-            Text("Forecast")
+            Text("Weather Forecast")
+            
             Spacer()
-            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
+            Button(action: {
+                print(weatherService.currentTemperatureData.temperature)
+            }) {
                 Image("bar_menu_xs")
             }
-        }
+        }.padding()
         
-//        VStack (alignment : .leading)
-//        {
-//            Text("23 Fhi")
-//                .font(.title)
-//                .fontWeight(.bold)
-//            Text("Sunny")
-//                .font(.title2)
-//            Button(action: {
-//                weatherManager.fetchCurrentWeather(cityName: "london")
-//
-//            }, label: {
-//                /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
-//            })
-//        }.padding()
+            CurrentView(current: weatherService.json.current, city: weatherService.city, currentData: weatherService.currentTemperatureData)
+                .padding()
+            HourlyForecastView(hourlyForecast: weatherService.json.hourly)
+                .padding()
         
+        Image("jamia_one")
+            .resizable()
+            .frame(maxWidth : 430, maxHeight: 200, alignment: .top)
+            .edgesIgnoringSafeArea(.all)
+            .aspectRatio(contentMode: .fit)
+            .padding()
+    
+            
         
       
+        }
+      //  .padding()
+      //  .resizable()
+        .onAppear(perform: {
+            weatherService.fetchCity()
+            weatherService.fetchWeather(lat: userLatitude, lon: userLongitude)
+        })
+        
+        
+    
     }
     
 }

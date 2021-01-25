@@ -19,8 +19,12 @@ class Weather_AppTests: XCTestCase {
     }
 
     func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        
+        let weatherService = WeatherService.shared
+        let icons = weatherService.icons
+        let json = weatherService.json
+        XCTAssertNotNil(icons)
+        XCTAssertNoThrow(json)
     }
 
     func testPerformanceExample() throws {

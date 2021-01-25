@@ -9,6 +9,7 @@ import SwiftUI
 
 struct WeeklyTemperatureView: View {
     var body: some View {
+        
         List{
             
         }

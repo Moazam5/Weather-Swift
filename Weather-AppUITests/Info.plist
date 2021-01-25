@@ -2,6 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationDefaultAccuracyReduced</key>
+	<string>location required by the app</string>
+	<key>NSLocationUsageDescription</key>
+	<string>location required by the app</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>location required by the app</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>location required by the app</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>location required by the app</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

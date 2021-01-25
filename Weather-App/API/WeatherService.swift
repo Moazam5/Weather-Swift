@@ -14,8 +14,12 @@ final class WeatherService  : ObservableObject
     
     var objectWillChange: PassthroughSubject<String,Never> = .init()
     @Published var city = "Loading"
-    @Published var currentTemperatureData = CurrentWeatherModel(temperature: 40, city: "New York", currentDate: "Mon 25, Jan", iconName: "cloud", hourly: [])
-    var weeklyData = WeeklyAPI(list: [])
+    @Published var currentTemperatureData = CurrentWeatherModel(temperature: "40", city: "New York", currentDate: "Mon 25, Jan", iconName: "cloud", hourly: [])
+    var weeklyData : [Day] = []
+    
+    init() {
+        fetchWeeklyWeather(lat: "", lon: "")
+    }
     
     
     
@@ -73,7 +77,7 @@ final class WeatherService  : ObservableObject
                 do
                 {
                     let decodedData = try decoder.decode(WeeklyAPI.self, from: safeData)
-                    self.weeklyData = decodedData
+                    self.weeklyData = decodedData.list
                    // return decodedData
                     print(decodedData)
 
@@ -117,7 +121,7 @@ final class WeatherService  : ObservableObject
                 {
                     let decodedData = try decoder.decode(API.self, from: safeData)
                  //   print(decodedData)
-                    self.currentTemperatureData.temperature = Int(decodedData.current.formattedTemp) ?? 30
+                    self.currentTemperatureData.temperature = (decodedData.current.formattedTemp)
                     self.currentTemperatureData.currentDate = decodedData.current.formattedDate
                     self.currentTemperatureData.hourly = decodedData.hourly
                     

@@ -18,7 +18,7 @@ struct HourlyForecastView: View {
                 VStack(spacing : 25) {
                     Text(offset == 0 ? "Now" : forecast.formattedHour)
                         .fontWeight(.heavy)
-                        .font(.system(size: 16))
+                        .font(.system(size: 18))
                     
                     Image(systemName: forecast.iconName)
                     Text(forecast.formattedTemp)

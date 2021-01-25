@@ -15,7 +15,7 @@ struct AppView: View {
                     Image(systemName: "sun.max")
                     Text("Daily")
                 }
-            WeeklyTemperatureView()
+            WeeklyView(tempData: [])
                 .tabItem {
                     Image(systemName: "calendar")
                     Text("Weekly")

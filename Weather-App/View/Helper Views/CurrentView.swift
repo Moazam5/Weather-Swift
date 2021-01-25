@@ -32,7 +32,7 @@ struct CurrentView: View {
                 .font(.system(size: 75))
                 .fontWeight(.thin)
                 .foregroundColor(.yellow)
-            Text(city)
+            Text(currentData.city)
                 .font(.system(size: 16))
                 .fontWeight(.medium)
             Spacer()

@@ -14,20 +14,38 @@ struct WeeklyAPI  : Codable{
 }
 
 struct Day : Codable {
-    let dt : Int
+    
+    private  let dt : Int
     let main : Main
-    let weather : [Weather]
+    let weather : [WeeklyWeather]
+    
+    var formattedDate : String {
+       let date = Date(timeIntervalSince1970: TimeInterval(dt))
+
+        let df = DateFormatter()
+        df.dateFormat = "h:00 a"
+        return df.string(from: date)
+    }
     
 }
 
 struct Main  : Codable{
     private let temp : Double
-    var formattedTemp : String{
+    var temperature : String{
         "\(Int(temp))º"
     }
     
-    let temp_max : Double
-    let temp_min : Double
+    private let temp_max : Double
+    private let temp_min : Double
+    
+    var maxTemp : String{
+        "\(Int(temp_max))º"
+    }
+    
+    var minTemp : String{
+        "\(Int(temp_min))º"
+    }
+    
     
 }
 

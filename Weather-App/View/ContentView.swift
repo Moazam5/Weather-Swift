@@ -46,7 +46,7 @@ struct ContentView : View
             }
         }.padding()
         
-            CurrentView( city: weatherService.city, currentData: weatherService.currentTemperatureData)
+            CurrentView( city: weatherService.currentTemperatureData.city, currentData: weatherService.currentTemperatureData)
                 .padding()
             HourlyForecastView(hourlyForecast: weatherService.currentTemperatureData.hourly)
                 .padding()

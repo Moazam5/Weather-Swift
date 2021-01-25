@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct WeeklyView: View {
+    let tempData : [Day]
+    
+    @ObservedObject var weatherService = WeatherService.shared
+
     var body: some View {
         VStack
         {
@@ -18,18 +22,22 @@ struct WeeklyView: View {
             
         
         VStack{
-            ForEach(0...4, id : (\.self)) {  _ in
-                WeeklyTemperatureView()
+            ForEach((0..<5), id : (\.self)) { index  in
+                Text(weatherService.weeklyData[8 * index].formattedDate)
+                    .fontWeight(.bold)
+                    .padding()
+                
+                WeeklyTemperatureView(tempData:weatherService.weeklyData)
                Spacer()
             }
         }
         }
-        }
+        }.onAppear()
     }
 }
 
-struct WeeklyView_Previews: PreviewProvider {
-    static var previews: some View {
-        WeeklyView()
-    }
-}
+//struct WeeklyView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        WeeklyView()
+//    }
+//}

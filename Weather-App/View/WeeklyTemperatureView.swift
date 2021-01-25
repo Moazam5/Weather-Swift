@@ -8,32 +8,64 @@
 import SwiftUI
 
 struct WeeklyTemperatureView: View {
-    @ObservedObject var weatherService = WeatherService.shared
-  //  var tempData : WeeklyAPI
+    
+    let tempData : [Day]
     
     var body: some View {
         
         
+        
         VStack (spacing : 0){
-            ForEach(0...7, id : (\.self)){_ in
+            let offset = 8
+            ForEach((0..<5)) {index in
+                let startIndex = offset * index
+                let endIndex = startIndex + 8
                 
-            
-            HStack{
-                Image(systemName: "cloud")
-                Text("Today •")
-                    .font(.system(size: 16))
-                    .fontWeight(.medium)
                 
-                Text("Sunny")
-                    .font(.system(size: 16))
-                    .fontWeight(.medium)
-                Spacer()
-                Text("25º / 30º")
-                    .font(.system(size: 16))
-                    .fontWeight(.medium)
-            }.padding()
-            .padding([.leading,.trailing])
-        }
+                ForEach((startIndex..<endIndex)) { element  in
+                    let forecast = tempData[element]
+                    HStack{
+                    Image(systemName: "cloud")
+                        Text("\(forecast.formattedDate) •")
+                        .font(.system(size: 16))
+                        .fontWeight(.medium)
+                    
+                        
+                        Text("\(forecast.weather[0].main)")
+                        .font(.system(size: 16))
+                        .fontWeight(.medium)
+                        
+                    Spacer()
+                        Text("\(forecast.main.minTemp)/ \(forecast.main.maxTemp)")
+                        .font(.system(size: 16))
+                        .fontWeight(.medium)
+                }.padding()
+                .padding([.leading,.trailing])
+                    
+                }
+                
+            }
+//            ForEach(Array(tempData.enumerated()), id : (\.offset)){offset , forecast in
+//
+//
+//                HStack{
+//                Image(systemName: "sunny")
+//                    Text("\(forecast.formattedDate) •")
+//                    .font(.system(size: 16))
+//                    .fontWeight(.medium)
+//
+//
+//                    Text("Cloud \(forecast.weather[0].main)")
+//                    .font(.system(size: 16))
+//                    .fontWeight(.medium)
+//
+//                Spacer()
+//                    Text("\(forecast.main.minTemp)/ \(forecast.main.maxTemp)")
+//                    .font(.system(size: 16))
+//                    .fontWeight(.medium)
+//            }.padding()
+//            .padding([.leading,.trailing])
+//        }
           
         }
         .background(Color.white)
@@ -43,8 +75,9 @@ struct WeeklyTemperatureView: View {
     
 }
 
-struct WeeklyTemperatureView_Previews: PreviewProvider {
-    static var previews: some View {
-        WeeklyTemperatureView()
-    }
-}
+//
+//struct WeeklyTemperatureView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        WeeklyTemperatureView(tempData: WeatherService.shared.weeklyData.list)
+//    }
+//}

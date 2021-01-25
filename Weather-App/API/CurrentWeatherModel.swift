@@ -8,7 +8,7 @@
 import Foundation
 
 struct CurrentWeatherModel {
-    var temperature : Int
+    var temperature : String
     var city : String
     var currentDate : String
     var iconName : String

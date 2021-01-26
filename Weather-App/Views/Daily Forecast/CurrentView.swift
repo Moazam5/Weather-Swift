@@ -9,7 +9,6 @@ import SwiftUI
 
 struct CurrentView: View {
     
-    let city : String
     let currentData : CurrentWeatherModel
     
     var body: some View {
@@ -52,7 +51,7 @@ struct CurrentView: View {
 
 struct CurrentView_Previews: PreviewProvider {
     static var previews: some View {
-        CurrentView( city: "New York, N", currentData: WeatherService.shared.currTempData)
+        CurrentView(currentData: WeatherService.shared.currTempData)
     }
 }
 

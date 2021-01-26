@@ -34,6 +34,7 @@ struct WeeklyHelperView: View {
                     Text("\(forecast.main.minTemp)/ \(forecast.main.maxTemp)")
                         .font(.system(size: 16))
                         .fontWeight(.medium)
+                        .foregroundColor(.orange)
                 }.padding()
                 .padding([.leading,.trailing])
                 

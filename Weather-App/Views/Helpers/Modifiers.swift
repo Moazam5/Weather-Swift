@@ -13,7 +13,7 @@ struct CardModifier : ViewModifier {
     func body(content: Content) -> some View {
         content
             .cornerRadius(8)
-            .shadow(color: .init(.sRGB, white: 0, opacity: 0.20), radius: 4, x: 0, y: 4)
+            .shadow(color: .init(.sRGB, white: 0, opacity: 0.40), radius: 4, x: 0, y: 4)
             
     }
     

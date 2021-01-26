@@ -30,6 +30,7 @@ struct ContentView : View
         
         HStack{
             Button(action: {
+               // print(weatherService.currTempData.temperature)
                 weatherService.fetchWeatherData(lat: userLatitude, lon: userLongitude, weekly: false)
             }, label: {
                 Image("reload")
@@ -39,15 +40,15 @@ struct ContentView : View
             
             Spacer()
             Button(action: {
-                print(weatherService.currentTemperatureData.temperature)
+                print(weatherService.currTempData.temperature)
             }) {
                 Image("bar_menu_xs")
             }
         }.padding()
         
-            CurrentView( city: weatherService.currentTemperatureData.city, currentData: weatherService.currentTemperatureData)
+            CurrentView( city: weatherService.currTempData.city, currentData: weatherService.currTempData)
                 .padding()
-            HourlyForecastView(hourlyForecast: weatherService.currentTemperatureData.hourly)
+            HourlyForecastView(hourlyForecast: weatherService.currTempData.hourly)
                 .padding()
         
         Image("nyc")
@@ -65,7 +66,7 @@ struct ContentView : View
             print("Fetching data")
             weatherService.fetchWeatherData(lat: userLatitude, lon: userLongitude, weekly: true)
             weatherService.fetchWeatherData(lat: userLatitude, lon: userLongitude, weekly : false)
-            print("Currnet temp", weatherService.currentTemperatureData.temperature)
+            print("Currnet temp", weatherService.currTempData.temperature)
 
         })
         

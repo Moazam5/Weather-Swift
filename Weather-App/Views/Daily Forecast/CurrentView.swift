@@ -3,7 +3,7 @@
 //  Weather-App
 //
 //  Created by Moazam Mir on 1/24/21.
-//
+//  Helper view to make the weaher card view
 
 import SwiftUI
 
@@ -14,10 +14,11 @@ struct CurrentView: View {
     
     var body: some View {
       
-        
-        VStack{
+        VStack {
             HStack{
                 Image(systemName: currentData.conditionName)
+                    .foregroundColor(.orange)
+                
                 VStack(alignment: .leading) {
                     Text("Today")
                         .font(.system(size: 18))
@@ -51,7 +52,7 @@ struct CurrentView: View {
 
 struct CurrentView_Previews: PreviewProvider {
     static var previews: some View {
-        CurrentView( city: "New York, N", currentData: WeatherService.shared.currentTemperatureData)
+        CurrentView( city: "New York, N", currentData: WeatherService.shared.currTempData)
     }
 }
 

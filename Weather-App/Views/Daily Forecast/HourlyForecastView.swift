@@ -26,7 +26,7 @@ struct HourlyForecastView: View {
                         .font(.system(size: 16))
                 }
                 .frame(width : 99, height: 160)
-                .background(offset == 0 ? Color.yellow: Color.white)
+                .background(offset == 0 ? Color.orange: Color.white)
                 .modifier(CardModifier())
                 
             }

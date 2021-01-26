@@ -10,14 +10,13 @@ import CoreLocation
 import Combine
 final class WeatherService  : ObservableObject
 {
+    //use weather service as singleton
     static let shared = WeatherService()
     
     var objectWillChange: PassthroughSubject<String,Never> = .init()
-    @Published var city = "Loading"
-    @Published var currentTemperatureData = CurrentWeatherModel(temperature: "40", city: "New York", currentDate: "Mon 25, Jan", iconName: "cloud", hourly: [], id: 200)
+    @Published var currTempData = CurrentWeatherModel(temperature: "40", city: "New York, NY", currentDate: "Mon 25, Jan", iconName: "cloud", hourly: [], id: 200)
     var weeklyData : [Day] = []
     let apiKey = "8bd0eccc296b6a82285602877181b0a9"
-   @Published var num = 0
     
     
     init() {
@@ -29,26 +28,27 @@ final class WeatherService  : ObservableObject
    //Mark:- Fetching data from API
     func fetchWeatherData(lat : String , lon : String, weekly : Bool)
     {
-        let  weeklyURL = "https://api.openweathermap.org/data/2.5/forecast?"
+        let weeklyURL = "https://api.openweathermap.org/data/2.5/forecast?"
         let currentURL = "https://api.openweathermap.org/data/2.5/onecall?"
         let requestURL = weekly ? weeklyURL : currentURL
         let urlString = "\(requestURL)lat=\(lat)&lon=\(lon)&appid=\(apiKey)&units=imperial"
         print(urlString)
-        num += 1
-        performWeeklyRequest(with: urlString, weekly: weekly)
+        performRequest(with: urlString, weekly: weekly)
     }
     
-    func performWeeklyRequest(with urlString: String, weekly : Bool)
+    func performRequest(with urlString: String, weekly : Bool)
     {
         if let url = URL(string: urlString) {
             let session = URLSession(configuration: .default)
+            
             let task = session.dataTask(with: url) { (data, response, error) in
+                //check for response
+              
                 guard let safeData = data , error == nil  else
                 {
-                    print("Error retreiving data from open weather map")
-                   // print(response)
+                    print("Error fetching data")
                     return
-                }
+                                    }
                 
                 if weekly{
                     self.updateWeeklyData(with: safeData)
@@ -60,20 +60,21 @@ final class WeatherService  : ObservableObject
         }
         
     }
-    
+    //Method to update currTempData object
     func updateCurrentData(with safeData : Data){
         let decoder = JSONDecoder()
         do
         {
             let decodedData = try decoder.decode(API.self, from: safeData)
-            self.currentTemperatureData.temperature = (decodedData.current.formattedTemp)
-            self.currentTemperatureData.currentDate = decodedData.current.formattedDate
-            self.currentTemperatureData.hourly = decodedData.hourly
-            self.currentTemperatureData.id = decodedData.current.weather[0].id
+            self.currTempData.temperature = (decodedData.current.formattedTemp)
+            self.currTempData.currentDate = decodedData.current.formattedDate
+            self.currTempData.hourly = decodedData.hourly
+            self.currTempData.id = decodedData.current.weather.first?.id ?? 200
+            print(currTempData.temperature)
         }
         catch
         {
-            print("Error decoding Current data")
+            print("Error converting to model")
             return
         }
     }
@@ -107,41 +108,4 @@ final class WeatherService  : ObservableObject
         return try! decoder.decode([String : WeatherSymbol].self, from: data)
     }
     
-//
-//    func fetchWeather(lat : String , lon : String)
-//    {
-//        let urlString = "\(weatherURL)lat=\(lat)&lon=\(lon)&appid=\(apiKey)&units=imperial"
-//        print(urlString)
-//        performRequest(with: urlString)
-//    }
-//
-//    func performRequest(with urlString: String) {
-//
-//        if let url = URL(string: urlString) {
-//            let session = URLSession(configuration: .default)
-//            let task = session.dataTask(with: url) { (data, response, error) in
-//                guard let safeData = data , error == nil  else
-//                {
-//                    print("Error retreiving data from open weather map")
-//                    return
-//                }
-//                let decoder = JSONDecoder()
-//                do
-//                {
-//                    let decodedData = try decoder.decode(API.self, from: safeData)
-//                    print(decodedData)
-//                    self.currentTemperatureData.temperature = (decodedData.current.formattedTemp)
-//                    self.currentTemperatureData.currentDate = decodedData.current.formattedDate
-//                    self.currentTemperatureData.hourly = decodedData.hourly
-//                }
-//                catch
-//                {
-//                    print("Error decoding data")
-//                    return
-//                }
-//            }
-//            task.resume()
-//        }
-//    }
-
 }

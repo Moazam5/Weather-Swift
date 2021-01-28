@@ -17,8 +17,10 @@ struct WeeklyMainView: View {
         {
         Text("Looking Ahead")
             .foregroundColor(.orange)
+            .fontWeight(.heavy)
             .font(.custom("Glober", fixedSize: 20))
-            .padding()
+            
+        Divider()
         ScrollView{
             
         
@@ -27,6 +29,7 @@ struct WeeklyMainView: View {
                 Text(weatherService.weeklyData[8 * index].formattedDate)
                     .fontWeight(.bold)
                     .padding()
+                    .foregroundColor(.gray)
                 
                 WeeklyHelperView(tempData:weatherService.weeklyData, index : index)
                Spacer()
